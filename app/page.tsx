@@ -5,6 +5,7 @@ import { ar } from "date-fns/locale";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import ArticleCard from "./_components/ArticleCard";
+import Link from "next/link";
 
 export default function Home() {
   const [articles, setArticles] = useState<Article[]>([]);
@@ -23,7 +24,9 @@ export default function Home() {
       <div className="flex flex-col gap-7">
         {
           articles.map((article) =>
-            <ArticleCard article={article} />
+            <Link href={`/article/${article.slug}`} key={article.id}>
+              <ArticleCard article={article} />
+            </Link>
           )
         }
       </div>
