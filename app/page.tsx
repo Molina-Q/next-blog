@@ -22,24 +22,9 @@ export default function Home() {
       <h1 className="text-3xl font-semibold pb-10">Blog</h1>
       <div className="flex flex-col gap-7">
         {
-          articles.map((article) => (
-            <article className="border border-slate-600 p-4 rounded-md flex flex-col gap-4 hover:bg-slate-800" key={article.id}>
-              <div>
-                <h2 className="text-xl font-semibold">{article.title}</h2>
-                <time className="text-sm font-light">{formatDate(article.createdAt)}</time>
-              </div>
-
-              <div className="line-clamp-2">{article.content}</div>
-
-              <div className="flex flex-row gap-2">
-                {article.tags.map((tag) => (
-                  <span className="text-sm border border-slate-500 bg-slate-700 rounded-md px-3 py-[1px]" key={tag.tag.id}>{tag.tag.name}</span>
-                ))}
-              </div>
-
-              <ArticleCard article={article} />
-            </article>
-          ))
+          articles.map((article) =>
+            <ArticleCard article={article} />
+          )
         }
       </div>
     </main>
