@@ -9,4 +9,8 @@ export function formatDate(date: Date): string {
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs))
 }
+
+export const slugify = (str: string) => {
+    return str.toLowerCase().trim().replace(/[\s\W-]+/g, "-").replace(/^-+|-+$/g, "");
+}
   
