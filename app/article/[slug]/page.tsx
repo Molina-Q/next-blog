@@ -31,13 +31,15 @@ export default function articleDetails({ params }: { params: { slug: string } })
                     <Tags article={article!} />
 
                     <section className='divide-y-[1px]'>
-                        {
-                            article?.comments.map((comment) => (
+                        {article.comments.length === 0
+                            ? <h3 className='text-lg font-semibold'>No comments yet</h3>
+                            : article?.comments.map((comment) => (
                                 <div key={comment.id} className="p-4 flex justify-between">
                                     <p>{comment.content}</p>
                                     <time className='text-sm'>{formatDate(comment.createdAt)}</time>
                                 </div>
                             ))
+
                         }
                     </section>
                 </article>
