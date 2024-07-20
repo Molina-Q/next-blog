@@ -1,16 +1,13 @@
 
 import { db } from '@/lib/db';
 import { slugify } from '@/lib/utils';
-import { NextResponse } from 'next/server';
-import React from 'react'
-
+import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(
-    req: Request
+    req: NextRequest
 ) {
     try {
         const { title, content, checkedTags } = await req.json();
-
 
         const article = await db.article.create({
             data: {
@@ -32,7 +29,6 @@ export async function POST(
                 tagArticles.push(tagArticle);
             })
         }
-
 
         return NextResponse.json([article, tagArticles]);
 
