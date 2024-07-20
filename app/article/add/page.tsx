@@ -1,5 +1,7 @@
 "use client"
 
+import RoundBtn from '@/components/RoundBtn';
+import { cn } from '@/lib/utils';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { z } from 'zod';
@@ -7,7 +9,7 @@ import { z } from 'zod';
 const schema = z.object({
     title: z.string().min(3).max(50),
     content: z.string().min(10),
-    checkTags: z.array(z.string()),
+    checkedTags: z.array(z.string()),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -16,7 +18,7 @@ const AddArticlePage: React.FC = () => {
     const [formData, setFormData] = useState<FormData>({
         title: '',
         content: '',
-        checkTags: [],
+        checkedTags: [],
     });
 
     console.log(formData);
@@ -25,23 +27,29 @@ const AddArticlePage: React.FC = () => {
 
     const [response, setResponse] = useState<string | null>(null);
 
+    const [stateResponse, setStateResponse] = useState<string | null>(null);
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
 
-        setFormData({
-            ...formData,
+        setFormData(prev => ({
+            ...prev,
             [name]: value,
-        });
+        }));
+
     };
-
+ 
     const handleCheckChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
+        const { value, checked } = e.target;
 
-        setFormData({
-            ...formData,
-            checkTags: formData.checkTags.push(value),
-        });
+        setFormData(prev => ({
+            ...prev,
+            checkedTags: checked
+                ? [...prev.checkedTags, value] // if true add the value to the array
+                : prev.checkedTags.filter(tag => tag !== value) // if false remove using filter
+        }));
     }
+
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -50,14 +58,17 @@ const AddArticlePage: React.FC = () => {
             axios.post('/api/article/add', formData).then((res) => {
                 console.log(res.data);
                 setResponse('Article added successfully');
+                setStateResponse("bg-emerald-700");
             }).catch((error) => {
                 console.error("ARTICLE", error);
+                setStateResponse("bg-rose-950");
             });
             console.log(formData);
 
         } else {
             console.log(validationResult.error);
             setResponse('Invalid form data');
+            setStateResponse("bg-rose-950");
         }
     };
 
@@ -70,10 +81,11 @@ const AddArticlePage: React.FC = () => {
     }, []);
 
     return (
-        <div className="container mx-auto">
+        <div className="container mx-auto flex flex-col gap-3">
             <h1 className="text-2xl font-bold mb-4">Add New Article</h1>
+            <RoundBtn label={"Blog"} link={"/"} />
+            {response && <div className={cn(stateResponse, 'mx-auto p-2 rounded-md')}>{response}</div>}
             <form onSubmit={handleSubmit}>
-                {response && <div>{response}</div>}
                 <div className="mb-4">
                     <label htmlFor="title" className="block font-bold mb-2">Title</label>
                     <input
@@ -104,7 +116,7 @@ const AddArticlePage: React.FC = () => {
                                 <label htmlFor={tag.id} className="block font-bold mb-2">
                                     {tag.name}
                                 </label>
-                                <input onChange={handleCheckChange} type="checkbox" name="tags" id={tag.id} value={tag.id} />
+                                <input onChange={handleCheckChange} type="checkbox" name="checkedTags" id={tag.id} value={tag.id} />
                             </div>
                         ))
                     }
