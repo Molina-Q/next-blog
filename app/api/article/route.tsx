@@ -1,31 +1,24 @@
+
 import { db } from '@/lib/db';
-import { NextResponse } from 'next/server';
-import React from 'react'
+import { slugify } from '@/lib/utils';
+import { NextRequest, NextResponse } from 'next/server';
 
-
-export async function GET() {
+export async function DELETE(
+    req: NextRequest
+) {
     try {
-        const articles = await db.article.findMany({
-            orderBy: {
-                createdAt: 'desc'
-            },
-            include: {
-                comments: true,
-                tags: {
-                    include: {
-                        tag: true
-                    }
-                }
+        const { id } = await req.json();
+
+        const article = await db.article.delete({
+            where: {  
+                id: id
             }
         });
 
-        return NextResponse.json(articles);
+        return NextResponse.json(article);
 
     } catch (error) {
-    
-        console.log("ARTICLE", error);
-        
+        console.log("error create Movie : ", error);
         return new NextResponse("Internal Server Error", { status: 500 });
-    
     }
 }
