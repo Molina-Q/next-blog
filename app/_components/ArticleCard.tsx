@@ -10,9 +10,14 @@ const ArticleCard: React.FC<{ article: Article }> = ({ article }) => {
             <div>
                 <div className="flex justify-between">
                     <h2 className="text-xl font-semibold">{article.title}</h2>
-                    <Link href={`/article/${article.slug}/edit`}>
-                        <p className="text-sm font-light">edit</p>
-                    </Link>
+                    <div className="flex gap-1">
+                        <Link href={`/article/${article.slug}/edit`}>
+                            <p className="text-sm font-light text-red-700">X</p>
+                        </Link>
+                        <Link href={`/article/${article.slug}/delete`}>
+                            <p className="text-sm font-light">edit</p>
+                        </Link>
+                    </div>
                 </div>
                 <time className="text-sm font-light">{formatDate(article.createdAt)}</time>
             </div>
