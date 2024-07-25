@@ -17,6 +17,15 @@ export default function articleDetails({ params }: { params: { slug: string } })
         });
     }, [])
 
+    const handleDelete = async (e: React.ChangeEvent<unknown>) => {
+        axios.delete(`/api/article/${e.target.id}/delete`).then((res) => {
+            console.log(res.data);
+        }).catch((error) => {
+            console.log(error);
+        }
+        );
+    }
+
     return (
         <div className='flex flex-col justify-center mx-auto px-[15%] py-10'>
             {article &&
@@ -24,6 +33,7 @@ export default function articleDetails({ params }: { params: { slug: string } })
                     <div>
                         <h2 className="text-xl font-semibold">{article?.title}</h2>
                         <time className="text-sm font-light">{article?.createdAt && formatDate(article?.createdAt)}</time>
+                        <button onClick={handleDelete} id={article.slug}>Delete</button>
                     </div>
 
                     <div className="line-clamp-2">{article?.content}</div>
