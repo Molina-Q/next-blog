@@ -4,11 +4,13 @@ model Comment {
 
     createdAt DateTime @default(now())
 
-    userId String
+    userId String @db.ObjectId
+    user User @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade) 
 
     articleId String @db.ObjectId
     article Article @relation(fields: [articleId], references: [id], onUpdate: Cascade, onDelete: Cascade)
 
+    @@index([userId])
     @@index([articleId])
 }
 
