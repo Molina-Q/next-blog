@@ -5,8 +5,13 @@ import { saltAndHashPassword } from "./lib/password";
 import { getUserFromDb } from "./lib/getUser";
 import { signInSchema } from "./lib/zod";
 import { ZodError } from "zod";
+import { PrismaAdapter } from "@auth/prisma-adapter"
+import { PrismaClient } from "@prisma/client"
+ 
+const prisma = new PrismaClient()
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+    adapter: PrismaAdapter(prisma),
     providers: [
         Credentials({
             // You can specify which fields should be submitted, by adding keys to the `credentials` object.
