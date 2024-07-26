@@ -1,4 +1,3 @@
-
 import { db } from '@/lib/db';
 import { slugify } from '@/lib/utils';
 import { NextRequest, NextResponse } from 'next/server';

@@ -5,7 +5,8 @@ export const saltAndHashPassword = async (password: unknown) => {
         throw new Error("Password must be a string")
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10) ;
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     return hashedPassword;
 }
   

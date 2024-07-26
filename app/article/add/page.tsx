@@ -63,6 +63,7 @@ const AddArticlePage: React.FC = () => {
                 console.error("ARTICLE", error);
                 setStateResponse("bg-rose-950");
             });
+            
             console.log(formData);
 
         } else {
