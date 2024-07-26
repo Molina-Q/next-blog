@@ -1,11 +1,13 @@
 
 import { db } from '@/lib/db';
-import { slugify } from '@/lib/utils';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function DELETE(
-    req: NextRequest, { params }: { params: { slug: string } }) {
+    req: NextRequest, 
+    { params }: { params: { slug: string } }
+) {
     try {
+        console.log("params : ", params.slug);
 
         const article = await db.article.delete({
             where: {
@@ -16,7 +18,7 @@ export async function DELETE(
         return NextResponse.json(article);
 
     } catch (error) {
-        console.log("error create Movie : ", error);
+        console.log("error delete article : ", error);
         return new NextResponse("Internal Server Error", { status: 500 });
     }
 }
