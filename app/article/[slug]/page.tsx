@@ -33,12 +33,12 @@ export default function articleDetails({ params }: { params: { slug: string } })
             {article &&
                 <article className="p-4 rounded-md flex flex-col gap-4" key={article?.id}>
                     <div>
-                        <h2 className="text-xl font-semibold">{article?.title}</h2>
-                        <time className="text-sm font-light">{article?.createdAt && formatDate(article?.createdAt)}</time>
+                        <h2 className="text-xl font-semibold">{article.title}</h2>
+                        <time className="text-sm font-light">{article.createdAt && formatDate(article.createdAt)}</time>
                         <p onClick={handleDelete} id={article.slug} className='cursor-pointer hover:underline w-fit'>Delete</p>
                     </div>
 
-                    <div className="line-clamp-2">{article?.content}</div>
+                    <div className="line-clamp-2">{article.content}</div>
 
                     <Tags article={article!} />
 
@@ -46,13 +46,14 @@ export default function articleDetails({ params }: { params: { slug: string } })
                         {
                             article.comments.length === 0
                                 ? <h3 className='text-lg font-semibold'>No comments yet</h3>
+                                
                                 : article.comments.map((comment) => (
                                     <div key={comment.id} className="p-4 flex justify-between">
                                         <p>{comment.content}</p>
                                         <time className='text-sm'>{formatDate(comment.createdAt)}</time>
+                                        <small>{comment.user.email}</small>
                                     </div>
                                 ))
-
                         }
                     </section>
                 </article>
