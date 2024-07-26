@@ -13,8 +13,15 @@ interface Comment {
     content: string;
     createdAt: Date;
     userId: string;
+    user: User;
     articleId: string;
     article: Article;
+}
+
+interface User {
+    id: string;
+    email: string;
+    comments: Comment[];
 }
 
 interface TagArticle {
