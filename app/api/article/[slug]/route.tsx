@@ -14,7 +14,11 @@ export async function GET(request: NextRequest, { params }: { params: { slug: st
                 slug: params.slug
             },
             include: {
-                comments: true,
+                comments: {
+                    include: {
+                        user: true
+                    }
+                },
                 tags: {
                     include: {
                         tag: true
