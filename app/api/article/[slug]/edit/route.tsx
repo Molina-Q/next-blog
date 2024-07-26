@@ -9,7 +9,7 @@ interface TagArticleBasic {
     id: string;
     articleId: string;
     tagId: string;
-  };
+};
 
 export async function POST(
     req: NextRequest, { params }: { params: { slug: string } }
@@ -37,11 +37,11 @@ export async function POST(
         const tagToAdd = checkedTags.filter((checkedTag: string) => {
             return !existingTagArticles.some((existingTag: TagArticleBasic) => (existingTag.tagId === checkedTag));
         });
-        
+
         // if the tag is only in the database i need to delete it
         const tagToDelete = existingTagArticles.filter((existingTag: TagArticleBasic) => {
             return !checkedTags.some((checkedTag: string) => (existingTag.tagId === checkedTag));
-        }); 
+        });
 
         const deletedTags = await Promise.all(tagToDelete.map(async (tagArticle: TagArticleBasic) => (
             db.tagArticle.delete({
