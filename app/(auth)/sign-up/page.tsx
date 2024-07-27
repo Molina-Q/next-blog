@@ -53,7 +53,7 @@ async function signUp(formData: FormData) {
     } catch (error) {
         if (axios.isAxiosError(error)) {
             console.error('Error (axios) :', error);
-            return { error: error || 'An error occurred during sign up.' };
+            return { error: error.message || 'An error occurred during sign up.' };
         }
         console.error('Error (not axios) :', error);
         return { error: 'An error occurred during sign up.' };
