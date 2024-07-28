@@ -2,10 +2,10 @@ import { signIn } from "@/auth"
 
 export default async function SignIn() {
     return (
-        <form
+        <form className="flex flex-col justify-center items-center gap-2"
             action={async (formData) => {
                 "use server"
-                await signIn("Credentials", formData)
+                await signIn("Credentials", { formData, redirect: false } )
             }}
         >
             <label>
